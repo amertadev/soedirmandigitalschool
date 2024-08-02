@@ -1,18 +1,11 @@
 import defaultTheme from "tailwindcss/defaultTheme"
+import plugin from "tailwindcss/plugin"
 
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
-    screens: {
-      "xs": "400px",
-      "sm": "640px",
-      "md": "768px",
-      "lg": "1024px",
-      "xl": "1280px",
-      "2xl": "1536px",
-    },
     extend: {
       colors: {
         "ijo-tua": "#43594B",
@@ -34,46 +27,25 @@ export default {
           },
         },
       },
-      rotate: {
-        "45": "45deg",
-        "135": "135deg",
-        "225": "225deg",
-        "315": "315deg",
-      },
-      animation: {
-        twinkle: "twinkle 2s ease-in-out forwards",
-        meteor: "meteor 3s ease-in-out forwards",
-      },
-      keyframes: {
-        twinkle: {
-          "0%": { 
-            opacity: 0, 
-            transform: "rotate(0deg)" 
-          },
-          "50%": { 
-            opacity: 1,
-            transform: "rotate(180deg)" 
-          },
-          "100%": { 
-            opacity: 0, 
-            transform: "rotate(360deg)" 
-          },
-        },
-        meteor: {
-          "0%": { 
-            opacity: 0, 
-            transform: "translateY(200%)" 
-          },
-          "50%": { 
-            opacity: 1  
-          },
-          "100%": { 
-            opacity: 0, 
-            transform: "translateY(0)" 
-          },
-        },
-      },
+      textShadow: {
+        sm: "1px 1px var(--tw-shadow-color)",
+        DEFAULT: "2px 2px var(--tw-shadow-color)",
+        md: "3px 3px var(--tw-shadow-color)",
+        lg: "4px 4px var(--tw-shadow-color)",
+      }
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          "text-shadow": (value) => ({
+            textShadow: value,
+          })
+        },
+        { values: theme("textShadow") }
+      )
+    })
+  ],
 }

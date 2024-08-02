@@ -17,10 +17,11 @@ const { title, description } = Astro.props
     <div class="noise"></div>
     <Header />
     <Drawer />
-    <main class="transition-margin duration-300 ease-in-out">
-      <slot />
-    </main>
-    <Footer />
-    <script is:inline src="/js/scroll.js"></script>
+    <div data-scroll-container>
+      <main>
+        <slot />
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>
